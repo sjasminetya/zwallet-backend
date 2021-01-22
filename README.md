@@ -44,6 +44,20 @@ npm install nodemon
 npm install mysql2
 ```
 
+### Add env
+```
+PORT  = 
+DB_HOST = 
+DB_USER = 
+DB_PASSWORD = 
+DB_NAME = 
+SECRET_KEY = 
+BASE_URL = 
+URL_LOGIN = 
+EMAIL_USERNAME = 
+EMAIL_PASSWORD = 
+```
+
 ## Built with
 
   * [Postman](https://www.getpostman.com/collections/3e371793a94f1a8bfbd2) - run the program.

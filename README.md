@@ -5,6 +5,11 @@ API creation documentation for the zwallet web application.
 To run the zwallet backend, you must install the package in your IDE favorite. I will guide you so you can run it on your laptop or computer.
 
 ### Prerequisites
+
+```
+git clone 
+```
+
 What things you need to install the software and the package
 
 #### Software

@@ -10,14 +10,7 @@ To run the zwallet backend, you must install the package in your IDE favorite. I
 git clone https://github.com/sjasminetya/zwallet-backend.git
 ```
 
-What things you need to install the software and the package
-
-#### Software
-
- * VSCODE (recomended) - [link download](https://code.visualstudio.com/download)
- * Postman - [link download](https://www.postman.com/downloads/)
-
-### Installing package in VSCODE
+What things you need to install
 You can see all of the package documentation in [npmjs.com](https://www.npmjs.com/)
 
 First of all, You have to open your terminal
@@ -61,6 +54,11 @@ BASE_URL =
 URL_LOGIN = 
 EMAIL_USERNAME = 
 EMAIL_PASSWORD = 
+```
+
+### To run
+```
+npm run dev / node app.js
 ```
 
 ## Built with

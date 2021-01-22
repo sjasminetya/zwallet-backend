@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const routerMain = require('./src/routers/index')
 
 const app = express()
 const port = process.env.PORT
@@ -11,7 +12,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-app.use(express.static('uploads'))
+app.use('/upload', express.static('./uploads'))
+app.use('/v2', routerMain)
 
 app.use((req, res, next) => {
     const err = new Error('URL Not Found')

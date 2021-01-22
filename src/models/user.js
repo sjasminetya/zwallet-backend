@@ -34,6 +34,10 @@ exports.getSaldoById = (id) => {
     return query('SELECT saldo FROM users WHERE id = ?', id)
 }
 
+exports.getPinById = (id) => {
+    return query('SELECT pin FROM users WHERE id = ?', id)
+}
+
 exports.updateSaldoUser = (saldo, id) => {
     return query('UPDATE users SET saldo = ? WHERE id = ?', [saldo, id])
 }

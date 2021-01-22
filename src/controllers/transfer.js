@@ -3,7 +3,7 @@ const {getTransactionHistory, transfer, deleteTransactionHistory} = require('../
 const {getSaldoById, updateSaldoUser, updateExpenseSender} = require('../models/user')
 const {v4: uuidv4} = require('uuid')
 
-const getSaldo = async(id) => {
+const getSaldo = async (id) => {
     const data = await getSaldoById(id)
     return data[0].saldo
 }

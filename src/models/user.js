@@ -37,3 +37,7 @@ exports.getSaldoById = (id) => {
 exports.updateSaldoUser = (saldo, id) => {
     return query('UPDATE users SET saldo = ? WHERE id = ?', [saldo, id])
 }
+
+exports.updateExpenseSender = (expense, id) => {
+    return query('UPDATE users SET expense = ? WHERE id = ?', [expense, id])
+}

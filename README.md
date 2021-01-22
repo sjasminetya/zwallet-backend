@@ -5,7 +5,7 @@ API creation documentation for the zwallet web application.
 To run the zwallet backend, you must install the package in your IDE favorite. I will guide you so you can run it on your laptop or computer.
 
 ### Prerequisites
-what things you need to install the software and the package
+What things you need to install the software and the package
 
 #### Software
 
@@ -13,11 +13,11 @@ what things you need to install the software and the package
  * Postman - [link download](https://www.postman.com/downloads/)
 
 ### Installing package in VSCODE
-you can see all of the package documentation in [npmjs.com](https://www.npmjs.com/)
+You can see all of the package documentation in [npmjs.com](https://www.npmjs.com/)
 
-first of all, You have to open your terminal
+First of all, You have to open your terminal
 
-dont forget to install [nodejs](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)!
+Dont forget to install [nodejs](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)!
 
 ```
 npm init

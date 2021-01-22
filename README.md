@@ -7,7 +7,7 @@ To run the zwallet backend, you must install the package in your IDE favorite. I
 ### Prerequisites
 
 ```
-git clone 
+git clone https://github.com/sjasminetya/zwallet-backend.git
 ```
 
 What things you need to install the software and the package

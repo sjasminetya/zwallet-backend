@@ -63,7 +63,7 @@ npm run dev / node app.js
 
 ## Built with
 
-  * [Postman](https://www.getpostman.com/collections/3e371793a94f1a8bfbd2) - run the program.
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3e371793a94f1a8bfbd2)
   
 ## Author
 

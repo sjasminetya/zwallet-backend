@@ -5,7 +5,7 @@ exports.transfer = (data) => {
 }
 
 exports.getTransactionHistory = (id) => {
-    return query('SELECT transfer.*, users.id, users.firstName, users.lastName FROM transfer INNER JOIN users ON transfer.receiverId = users.id WHERE senderId = ?', id)
+    return query('SELECT transfer.*, users.id, users.firstName, users.lastName, users.image FROM transfer INNER JOIN users ON transfer.receiverId = users.id WHERE senderId = ?', id)
 }
 
 exports.deleteTransactionHistory = (id) => {

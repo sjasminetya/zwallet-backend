@@ -22,7 +22,7 @@ exports.getFriends = (id) => {
 
 exports.getAllUser = (name, phoneNumber) => {
     if (name) {
-        return query('SELECT CONCAT(firstName, " ", lastName) AS name FROM users WHERE firstName LIKE ?', `%${name}%`)
+        return query('SELECT * FROM users WHERE firstName LIKE ?', `%${name}%`)
     } else if (phoneNumber){
         return query('SELECT * FROM users WHERE phoneNumber LIKE ?', `%${phoneNumber}%`)
     } else {

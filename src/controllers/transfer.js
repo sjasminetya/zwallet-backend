@@ -1,11 +1,16 @@
 const {reject, response} = require('../helpers/helpers')
 const {getTransactionHistory, transfer, deleteTransactionHistory} = require('../models/transfer')
-const {getSaldoById, updateSaldoUser, updateExpenseSender} = require('../models/user')
+const {getSaldoById, updateSaldoUser, updateExpenseSender, getPinById} = require('../models/user')
 const {v4: uuidv4} = require('uuid')
 
 const getSaldo = async (id) => {
     const data = await getSaldoById(id)
     return data[0].saldo
+}
+
+const getPin = async (id) => {
+    const data = await getPinById(id)
+    return data[0].pin
 }
 
 const updateSaldo = async (saldo, id) => {
@@ -18,15 +23,25 @@ const updateExpense = async (expense, id) => {
 
 exports.transfer = async (req, res) => {
     let transactionStatus = ''
+    const userId = req.id
     const amount = req.body.amount
     const notes = req.body.notes
+    const senderPin = req.body.senderPin
     const receiverId = req.body.receiverId
     const senderId = req.body.senderId
     const currentSaldoReceiver = await getSaldo(receiverId)
     const currentSaldoSender = await getSaldo(senderId)
+    const pin = await getPin(userId)
     const updateSaldoReceiver = currentSaldoReceiver + Number(amount)
     const updateSaldoSender = currentSaldoSender - Number(amount)
     const id = uuidv4()
+
+    if (pin === null) {
+        return reject(res, null, 400, {error: 'you must create pin'})
+    } else if (pin != senderPin) {
+        return reject(res, null, 400, {error: 'pin wrong'})
+    }
+
     try {
         if (currentSaldoSender < amount) {
             transactionStatus = 'FAILED'
@@ -45,6 +60,7 @@ exports.transfer = async (req, res) => {
         receiverId,
         senderId,
         amount,
+        senderPin,
         notes,
         transaction_status: transactionStatus,
         date_time: new Date()

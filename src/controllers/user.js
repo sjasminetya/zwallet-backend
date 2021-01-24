@@ -20,6 +20,7 @@ exports.login = async (req, res) => {
     try {
         const user = get[0]
         if (user !== undefined && user.length !== 0) {
+            console.log(user.isActive)
             if (user.isActive === 0) return reject(res, null, 401, {error: 'Please confirm your email to login!'})
 
             bcrypt.compare(password, user.password, function (err, resCheck) {
@@ -72,6 +73,7 @@ exports.register = async (req, res) => {
                     const url = `${process.env.BASE_URL}/v2/users/confirmation/${data.id}/${emailToken}`
                     delete data.password
                     delete data.pin
+                    console.log(data.email)
           
                     transporter.sendMail({
                       to: data.email,

@@ -161,7 +161,7 @@ exports.update = async (req, res) => {
             
             if (password) { data.password = hash }
             
-            if (pin) { data.pin = pin }
+            if (pin) { data.pin = hash }
             
             if (saldo) { data.saldo = saldo }
 

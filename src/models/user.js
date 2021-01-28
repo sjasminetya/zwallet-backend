@@ -38,10 +38,22 @@ exports.getPinById = (id) => {
     return query('SELECT pin FROM users WHERE id = ?', id)
 }
 
+exports.getExpenseById = (id) => {
+    return query('SELECT expense FROM users WHERE id = ?', id)
+}
+
+exports.getIncomeById = (id) => {
+    return query('SELECT income FROM users WHERE id = ?', id)
+}
+
 exports.updateSaldoUser = (saldo, id) => {
     return query('UPDATE users SET saldo = ? WHERE id = ?', [saldo, id])
 }
 
 exports.updateExpenseSender = (expense, id) => {
     return query('UPDATE users SET expense = ? WHERE id = ?', [expense, id])
+}
+
+exports.updateIncome = (expense, id) => {
+    return query('UPDATE users SET income = ? WHERE id = ?', [expense, id])
 }

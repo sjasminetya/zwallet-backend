@@ -1,4 +1,4 @@
-const {getSaldoById, updateSaldoUser, getPinById} = require('../models/user')
+const {getSaldoById, updateSaldoUser, getPinById, getIncomeById, updateIncome} = require('../models/user')
 const {topup} = require('../models/topup')
 const { reject, response } = require('../helpers/helpers')
 const {v4: uuidv4} = require('uuid')
@@ -13,8 +13,17 @@ const getPin = async (id) => {
     return data[0].pin
 }
 
+const getIncome = async (id) => {
+    const data = await getIncomeById(id)
+    return data[0].income
+}
+
 const updateSaldo = async (saldo, id) => {
     await updateSaldoUser(saldo, id)
+}
+
+const updateIncomeSender = async (income, id) => {
+    await updateIncome(income, id)
 }
 
 exports.topup = async (req, res) => {
@@ -23,7 +32,9 @@ exports.topup = async (req, res) => {
     const {pin, balance} = req.body
     const currentSaldo = await getSaldo(userId)
     const userPin = await getPin(userId)
+    const currentIncome = await getIncome(userId)
     const updateSaldoUser = currentSaldo + Number(balance)
+    const updateIncome = currentIncome + Number(balance)
 
     if (userPin === null) {
         return reject(res, null, 400, {error: 'you must create pin'})
@@ -33,6 +44,7 @@ exports.topup = async (req, res) => {
 
     try {
         await updateSaldo(updateSaldoUser, userId)
+        await updateIncomeSender(updateIncome, userId)
     } catch (error) {
         console.log(error)
     }

@@ -1,6 +1,6 @@
 const {reject, response} = require('../helpers/helpers')
 const {getTransactionHistory, transfer, deleteTransactionHistory} = require('../models/transfer')
-const {getSaldoById, updateSaldoUser, updateExpenseSender, getPinById} = require('../models/user')
+const {getSaldoById, updateSaldoUser, updateExpenseSender, getPinById, getExpenseById, getIncomeById, updateIncome} = require('../models/user')
 const {v4: uuidv4} = require('uuid')
 const {pagination} = require('../helpers/pagination')
 
@@ -14,12 +14,26 @@ const getPin = async (id) => {
     return data[0].pin
 }
 
+const getExpense = async (id) => {
+    const data = await getExpenseById(id)
+    return data[0].expense
+}
+
+const getIncome = async (id) => {
+    const data = await getIncomeById(id)
+    return data[0].income
+}
+
 const updateSaldo = async (saldo, id) => {
     await updateSaldoUser(saldo, id)
 }
 
 const updateExpense = async (expense, id) => {
     await updateExpenseSender(expense, id)
+}
+
+const updateIncomeReceiver = async (income, id) => {
+    await updateIncome(income, id)
 }
 
 exports.transfer = async (req, res) => {
@@ -33,8 +47,12 @@ exports.transfer = async (req, res) => {
     const currentSaldoReceiver = await getSaldo(receiverId)
     const currentSaldoSender = await getSaldo(senderId)
     const pin = await getPin(userId)
+    const currentExpenseSender = await getExpense(userId)
+    const currentIncomeReceiver = await getIncome(receiverId)
     const updateSaldoReceiver = currentSaldoReceiver + Number(amount)
     const updateSaldoSender = currentSaldoSender - Number(amount)
+    const updateExpenseSender = currentExpenseSender + Number(amount)
+    const updateIncome = currentIncomeReceiver + Number(amount)
     const id = uuidv4()
 
     if (pin === null) {
@@ -50,7 +68,8 @@ exports.transfer = async (req, res) => {
         }
         await updateSaldo(updateSaldoReceiver, receiverId)
         await updateSaldo(updateSaldoSender, senderId)
-        await updateExpense(amount, senderId)
+        await updateExpense(updateExpenseSender, senderId)
+        await updateIncomeReceiver(updateIncome, receiverId)
         transactionStatus = 'SUCCESS'
     } catch (error) {
         console.log(error)

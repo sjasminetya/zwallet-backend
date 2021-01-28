@@ -62,6 +62,7 @@ exports.register = async (req, res) => {
                 saldo: 0,
                 isActive: 0,
                 expense: 0,
+                income: 0,
                 image: `${process.env.BASE_URL}/upload/avatar.jpg`,
                 updatedAt: new Date(),
                 createdAt: new Date()
@@ -98,6 +99,7 @@ exports.register = async (req, res) => {
                                 }
                                 button a {
                                     text-decoration: none;
+                                    color: #fff !important;
                                 }
                                 button:hover {
                                     outline: none;
@@ -161,7 +163,7 @@ exports.update = async (req, res) => {
             
             if (password) { data.password = hash }
             
-            if (pin) { data.pin = hash }
+            if (pin) { data.pin = pin }
             
             if (saldo) { data.saldo = saldo }
 
@@ -249,4 +251,97 @@ exports.getAllUser = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+exports.sendEmailResetPassword = async (req, res) => {
+    const email = req.body.email
+    const result = await checkEmail(email)
+    try {
+        const data = result[0]
+        jwt.sign({ id: data.id }, process.env.SECRET_KEY, { expiresIn: '24h' }, function (err, emailToken) {
+            const url = `${process.env.BASE_URL}/v2/users/reset-password/${emailToken}`
+            delete data.password
+            delete data.pin
+            console.log(data.email)
+  
+            transporter.sendMail({
+              to: data.email,
+              subject: 'Team zwallet, reset password',
+              html: `<!DOCTYPE html>
+              <html lang="en">
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <title>Document</title>
+                  <style>
+                        .container {
+                            color: #000;
+                        }
+                        button {
+                            width: 200px;
+                            height: 70px;
+                            background-color: #6379F4;
+                            border-radius: 10px;
+                            border: none;
+                            color: #ffffff !important;
+                        }
+                        button a {
+                            text-decoration: none;
+                        }
+                        button:hover {
+                            outline: none;
+                        }
+                  </style>
+              </head>
+              <body>
+                  <div class="container">
+                      <div class="text-email">
+                        <p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link, or paste this into your browser to complete the process:</p>
+                        <button><a href="${url}">Reset password</a></button>
+                        <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+                        <p>Thanks,<br>Zwallet Team</p>
+                        <p>P.S. We also love hearing from you and helping you with any issues yo have. Please reply to this email if you want to ask a question or just say hi.</p>
+                      </div>
+                  </div>
+              </body>
+              </html>`
+            })
+
+        return response(res, {message: `An email has been sent to ${data.email}`}, 200, null)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+exports.redirectResetPassword = async (req, res) => {
+    try {
+        jwt.verify(req.params.token, process.env.SECRET_KEY)
+        return res.redirect(`${process.env.URL_RESET_PASSWORD}`)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+exports.resetPassword = async (req, res) => {
+    const password = req.body.password
+    const id = req.params.id
+    const data = {}
+
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(password, salt, async function (err, hash) {
+            
+            if (password) { data.password = hash }
+
+            const result = await update(data, id)
+            try {
+                if (result.length === 0) {
+                    return reject(res, null, 400, {error: 'cant update password'})
+                }
+                response(res, {message: 'password successfull update'}, 200, null)
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    })
 }

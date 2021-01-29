@@ -1,5 +1,5 @@
 const {reject, response} = require('../helpers/helpers')
-const {getTransactionHistory, transfer, deleteTransactionHistory} = require('../models/transfer')
+const {getTransactionHistory, transfer, deleteTransactionHistory, countTransactionHistory} = require('../models/transfer')
 const {getSaldoById, updateSaldoUser, updateExpenseSender, getPinById, getExpenseById, getIncomeById, updateIncome} = require('../models/user')
 const {v4: uuidv4} = require('uuid')
 const {pagination} = require('../helpers/pagination')
@@ -100,15 +100,14 @@ exports.transfer = async (req, res) => {
 exports.getTransactionHistory = async (req, res) => {
     const id = req.params.id
     const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 5
+    const limit = parseInt(req.query.limit) || 4
     const offset = (page - 1) * limit
     const result = await getTransactionHistory(id, offset, limit)
     try {
         if (result.length === 0) {
             return reject(res, null, 400, {error: 'cant get history transaction'})
         }
-        console.log(result.length)
-        const setPagination = await pagination(limit, page, result.length)
+        const setPagination = await pagination(limit, page, id)
         return response(res, {pagination: setPagination, transaction: result}, 200, null)
     } catch (error) {
         console.log(error)

@@ -17,6 +17,6 @@ exports.deleteTransactionHistory = (id) => {
     return query('DELETE FROM transfer WHERE id = ?', id)
 }
 
-exports.countTransactionHistory = () => {
-    return query('SELECT COUNT(*) AS totalData FROM transfer')
+exports.countTransactionHistory = (senderId) => {
+    return query(`SELECT COUNT(*) AS totalData FROM transfer INNER JOIN users ON transfer.receiverId = users.id WHERE senderId = '${senderId}'`)
 }

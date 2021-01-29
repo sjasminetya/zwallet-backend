@@ -10,39 +10,17 @@ To run the zwallet backend, you must install the package in your IDE favorite. I
 git clone https://github.com/sjasminetya/zwallet-backend.git
 ```
 
-What things you need to install
-You can see all of the package documentation in [npmjs.com](https://www.npmjs.com/)
+### Built with
+* **[Node JS](https://nodejs.org/en/download/)**
+* **[Express JS](http://expressjs.com/en/starter/installing.html)**
 
-### Install package
-
-Dont forget to install [nodejs](https://nodejs.org/en/download/)!
-
-```
-npm init
-```
-```
-npm install express
-```
-```
-npm install router
-```
-```
-npm install body-parser
-```
-```
-npm install morgan
-```
-```
-npm install dotenv
-```
-```
-npm install nodemon
-```
-```
-npm install mysql2
-```
+### Requirements
+* **[Node JS](https://nodejs.org/en/download/)**
+* **[Postman](https://www.postman.com/) for testing**
+* **Database (export database name ark_zwallet.sql)**
 
 ### Add env
+Create .env file in your root project folder.
 ```
 PORT  = 
 DB_HOST = 
@@ -61,7 +39,7 @@ EMAIL_PASSWORD =
 npm run dev / node app.js
 ```
 
-## Built with
+## Get collection
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3e371793a94f1a8bfbd2)
   

@@ -13,9 +13,9 @@ git clone https://github.com/sjasminetya/zwallet-backend.git
 What things you need to install
 You can see all of the package documentation in [npmjs.com](https://www.npmjs.com/)
 
-First of all, You have to open your terminal
+### Install package
 
-Dont forget to install [nodejs](https://nodejs.org/en/download/) and [git](https://git-scm.com/downloads)!
+Dont forget to install [nodejs](https://nodejs.org/en/download/)!
 
 ```
 npm init

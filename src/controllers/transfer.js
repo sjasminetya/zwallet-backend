@@ -59,6 +59,8 @@ exports.transfer = async (req, res) => {
         return reject(res, null, 400, {error: 'you must create pin'})
     } else if (pin != senderPin) {
         return reject(res, null, 400, {error: 'pin wrong'})
+    } else if (pin === 000000) {
+        return reject(res, null, 400, {error: 'you must update your PIN'})
     }
 
     try {

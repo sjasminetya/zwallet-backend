@@ -13,7 +13,7 @@ router
     .get('/:id/friends', verifyAccess, getFriends)
     .get('/', verifyAccess, getAllUser)
     .post('/send-email', sendEmailResetPassword)
-    .get('/reset-password/:token', redirectResetPassword)
+    .get('/reset-password/:id/:token', redirectResetPassword)
     .patch('/reset/:id', resetPassword)
 
 module.exports = router

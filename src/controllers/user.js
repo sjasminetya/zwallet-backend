@@ -236,7 +236,7 @@ exports.getAllUser = async (req, res) => {
     const result = await getAllUser(name, phoneNumber)
     try {
         if (result.length === 0) {
-            reject(res, null, 400, {error: 'cant get user'})
+            return reject(res, null, 400, {error: 'cant get user'})
         }
         for(let key in result){
             if(result.hasOwnProperty(key)) {
@@ -258,8 +258,11 @@ exports.sendEmailResetPassword = async (req, res) => {
     const result = await checkEmail(email)
     try {
         const data = result[0]
+        if (!data) {
+            return reject(res, null, 400, {error: 'email not found'})
+        }
         jwt.sign({ id: data.id }, process.env.SECRET_KEY, { expiresIn: '24h' }, function (err, emailToken) {
-            const url = `${process.env.BASE_URL}/v2/users/reset-password/${emailToken}`
+            const url = `${process.env.BASE_URL}/v2/users/reset-password/${data.id}/${emailToken}`
             delete data.password
             delete data.pin
             console.log(data.email)
@@ -274,29 +277,30 @@ exports.sendEmailResetPassword = async (req, res) => {
                   <meta name="viewport" content="width=device-width, initial-scale=1.0">
                   <title>Document</title>
                   <style>
-                        .container {
-                            color: #000;
-                        }
-                        button {
-                            width: 200px;
-                            height: 70px;
-                            background-color: #6379F4;
-                            border-radius: 10px;
-                            border: none;
-                            color: #ffffff !important;
-                        }
-                        button a {
-                            text-decoration: none;
-                        }
-                        button:hover {
-                            outline: none;
-                        }
+                    .container {
+                        color: #000;
+                    }
+                    button {
+                        width: 200px;
+                        height: 70px;
+                        background-color: #6379F4;
+                        border-radius: 10px;
+                        border: none;
+                        color: #ffffff !important;
+                    }
+                    button a {
+                        text-decoration: none;
+                        color: #fff !important;
+                    }
+                    button:hover {
+                        outline: none;
+                    }
                   </style>
               </head>
               <body>
                   <div class="container">
                       <div class="text-email">
-                        <p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the following link, or paste this into your browser to complete the process:</p>
+                        <p>You are receiving this because you (or someone else) have requested the reset of the password for your account. Please click on the button to complete the process:</p>
                         <button><a href="${url}">Reset password</a></button>
                         <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
                         <p>Thanks,<br>Zwallet Team</p>
@@ -317,7 +321,7 @@ exports.sendEmailResetPassword = async (req, res) => {
 exports.redirectResetPassword = async (req, res) => {
     try {
         jwt.verify(req.params.token, process.env.SECRET_KEY)
-        return res.redirect(`${process.env.URL_RESET_PASSWORD}`)
+        return res.redirect(`${process.env.URL_RESET_PASSWORD}/${req.params.id}`)
     } catch (error) {
         console.log(error)
     }

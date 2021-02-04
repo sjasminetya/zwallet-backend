@@ -23,8 +23,8 @@ git clone https://github.com/sjasminetya/zwallet-backend.git
 Create .env file in your root project folder.
 ```
 PORT  = 5000
-DB_HOST = localhost
-DB_USER = root
+DB_HOST = 
+DB_USER = 
 DB_PASSWORD = 
 DB_NAME = ark_zwallet
 SECRET_KEY = 

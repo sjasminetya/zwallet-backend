@@ -17,7 +17,7 @@ exports.getUserById = (id) => {
 }
 
 exports.getFriends = (id) => {
-    return query('SELECT * FROM users WHERE id != ?', id)
+    return query('SELECT * FROM users WHERE id != ? ORDER BY firstName', id)
 }
 
 exports.getAllUser = (name, phoneNumber) => {

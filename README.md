@@ -18,17 +18,18 @@ git clone https://github.com/sjasminetya/zwallet-backend.git
 * **[Node JS](https://nodejs.org/en/download/)**
 * **[Postman](https://www.postman.com/) => for testing**
 * **[Database](https://github.com/sjasminetya/zwallet-backend/blob/main/ark_zwallet.sql) => export database**
+* **[Frontend Zwallet](https://github.com/sjasminetya/zwallet-frontend)**
 
 ### Add env
 Create .env file in your root project folder.
 ```
-PORT  = 5000
+PORT  = 
 DB_HOST = 
 DB_USER = 
 DB_PASSWORD = 
 DB_NAME = ark_zwallet
 SECRET_KEY = 
-BASE_URL = http://127.0.0.1:5000
+BASE_URL = 
 URL_LOGIN = 
 EMAIL_USERNAME = 
 EMAIL_PASSWORD = 
